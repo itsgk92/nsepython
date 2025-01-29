@@ -713,6 +713,7 @@ def expiry_history(symbol,start_date="",end_date="",type="options"):
 
     #print(payload)
 
+    ''' The below parsing fails
     for key, value in payload['expiryDatesByInstrument'].items():
       if type.lower() == "options" and "OPT" in key:
           payload_data = payload['expiryDatesByInstrument'][key]
@@ -720,6 +721,17 @@ def expiry_history(symbol,start_date="",end_date="",type="options"):
       elif type.lower() == "futures" and "FUT" in key:
           payload_data =  payload['expiryDatesByInstrument'][key]
           break
+    '''
+
+    payload_data = []
+
+    '''Custom parsing for changed payload'''
+    for year, expiry_dates in payload['years'].items():
+        if year != "all":
+            payload_data.extend(expiry_dates)
+
+    print(payload_data)
+
     
     # Convert start_date and end_date to datetime objects
     start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y")
