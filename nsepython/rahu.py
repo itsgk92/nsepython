@@ -730,7 +730,7 @@ def expiry_history(symbol,start_date="",end_date="",type="options"):
         if year != "all":
             payload_data.extend(expiry_dates)
 
-    print(payload_data)
+    #print(payload_data)
 
     
     # Convert start_date and end_date to datetime objects
@@ -740,18 +740,12 @@ def expiry_history(symbol,start_date="",end_date="",type="options"):
     # Initialize an empty list to store filtered dates
     filtered_date_payload = []
 
-    # Initialize a flag to check if the first date after end_date has been added
-    added_after_end_date = False    
-
     # Iterate through date_payload and filter dates within the range
     for date_str in payload_data:
         date_obj = datetime.datetime.strptime(date_str, "%d-%b-%Y")
         if start_date <= date_obj <= end_date:
             filtered_date_payload.append(date_str)
-        elif date_obj > end_date and not added_after_end_date:
-            filtered_date_payload.append(date_str)
-            added_after_end_date = True
-    
+
     return filtered_date_payload
 
 # # Nifty Indicies Site
